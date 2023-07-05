@@ -6,7 +6,7 @@ double[,] cont =
     {0,1 },
     {1,4 },
 };
-Matrix matrix = new Matrix();
+Matrix matrix = new Matrix(cont);
 
 Console.WriteLine(matrix.Determinant);
 

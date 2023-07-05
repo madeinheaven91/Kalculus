@@ -36,8 +36,7 @@ namespace Kalculus.Matrices
                 for (int j = 0; j < content.GetLength(1); j++)
                 {
 
-                    minor[i, j]
-                    if (i == row || j == column)
+                    
                         
 
                 }
