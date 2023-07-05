@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Kalculus.Vectors
 {
-    internal class Vector
+    public class Vector
     {
     }
 }
