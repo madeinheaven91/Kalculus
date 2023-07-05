@@ -49,11 +49,11 @@ namespace Kalculus.Vectors
         {
             get
             {
-                return this.Content[index];
+                return Content[index];
             }
             set 
             {
-                this.Content[index] = value;
+                Content[index] = value;
             }
         }
 

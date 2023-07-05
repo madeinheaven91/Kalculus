@@ -16,4 +16,4 @@ Vector second = new(3, 2, 0, 9);
 Vector sum = second + fisrt;
 sum.PrintContent();
 
-Console.WriteLine($"{sum[0]}, {sum[1]}, {sum[2]}, {sum[3]} ");
+Console.WriteLine($"{sum[0]}, {sum[1]}, {sum[2]}");
