@@ -32,15 +32,10 @@ namespace Kalculus.Matrices
             double[,] minor = new double[content.GetLength(0) - 1, content.GetLength(1) - 1];
 
             for (int i = 0; i < content.GetLength(0); i++)
-            {
                 for (int j = 0; j < content.GetLength(1); j++)
-                {
-
-                    
-                        
+                {       
 
                 }
-            }
             throw new Exception();
 
         }
