@@ -1,12 +1,15 @@
 ﻿using Kalculus;
 using Kalculus.Matrices;
 
-Matrix matrix = new Matrix(2, 4);
-matrix.Content[1, 1] = 1;
+double[,] cont =
+{
+    {0,1 },
+    {1,4 },
+};
+Matrix matrix = new Matrix(cont);
 
-Console.WriteLine(matrix);
-Matrix matrix1 = new Matrix(2, 4);
-Console.WriteLine(matrix1);
+Console.WriteLine(matrix.Determinant);
 
-Console.WriteLine(matrix.Equals(matrix1));
+
+
 

@@ -8,18 +8,29 @@ namespace Kalculus.Matrices
 {
     public class Matrix
     {
-        public Matrix() { }
-        public Matrix(int rows, int cols)
+        public Matrix(double[,] matrix, bool initParams = true)
         {
+            int rows = matrix.GetLength(0);
+            int cols = matrix.GetLength(1);
+
             Rows = rows;
             Columns = cols;
-            Content = new double[rows, cols];
+            Content = matrix;
             ElementsCount = rows * cols;
+            InitParams = initParams;
+            if (initParams)
+            {
+                MatrixEvaluate evaluate = new MatrixEvaluate();
+                Determinant = evaluate.Determinant(Content);
+            }
         }
+        private bool InitParams;
         public int Rows { get; }
         public int Columns { get; }
         public int ElementsCount { get; }
+        public double? Determinant { get; }
         public double[,] Content { get; set; }
+
         public override string ToString()
         {
             StringBuilder stringBuilder = new StringBuilder();
