@@ -25,9 +25,9 @@ namespace Kalculus.Matrices
             {
                 for (int j = 0; j < n; j++)
                 {
+
                 }
             }
-                    throw new NotImplementedException();
 
         }
         public static double[,] Minor(double[,] matrix, int row, int column)

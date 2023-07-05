@@ -101,6 +101,18 @@ namespace Kalculus.Matrices
             }
         }
 
+        public double this[int i, int j]
+        {
+            get
+            {
+                return Content[i, j];
+            }
+            set
+            {
+                Content[i, j] = value;
+            }
+        }
+
         public double[,] GetMinor(int a, int b)
         {
             return Evaluate.Minor(Content, a, b);
