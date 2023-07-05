@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33723.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kalculus", "Kalculus\Kalculus.csproj", "{78617674-8171-45D8-9714-547FB8F57568}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{943779B7-05B9-4F4C-A687-943BA34B5C62}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{78617674-8171-45D8-9714-547FB8F57568}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78617674-8171-45D8-9714-547FB8F57568}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78617674-8171-45D8-9714-547FB8F57568}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78617674-8171-45D8-9714-547FB8F57568}.Release|Any CPU.Build.0 = Release|Any CPU
+		{943779B7-05B9-4F4C-A687-943BA34B5C62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{943779B7-05B9-4F4C-A687-943BA34B5C62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{943779B7-05B9-4F4C-A687-943BA34B5C62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{943779B7-05B9-4F4C-A687-943BA34B5C62}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {23930701-D332-4405-95B4-20969F5D509D}
+	EndGlobalSection
+EndGlobal
