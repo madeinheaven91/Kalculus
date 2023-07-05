@@ -34,8 +34,7 @@ namespace Kalculus.Matrices
             InitParams = initParams;
             if (initParams)
             {
-                MatrixEvaluate evaluate = new MatrixEvaluate();
-                Determinant = evaluate.Determinant(Content);
+                Determinant = Evaluate.Determinant(Content);
             }
         }
 
@@ -45,7 +44,67 @@ namespace Kalculus.Matrices
         public int ElementsCount { get; }
         public double? Determinant { get; }
         public double[,] Content { get; set; }
+ 
+        /// <summary>
+        /// Returns whether the matrix is a square matrix or not.
+        /// </summary>
+        public bool IsSquare
+        {
+            get
+            {
+                if (Rows == Columns)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
 
+        /// <summary>
+        /// Returns whether the matrix is an identity matrix or not.
+        /// </summary>
+        public bool IsIdentity
+        {
+            get
+            {
+                if (IsSquare == false) return false;
+
+                for (int row = 0; row < Rows; row++)
+                {
+                    for (int column = 0; column < Columns; column++)
+                    {
+                        switch (row == column)
+                        {
+                            case true:
+                                switch (Content[row, column])
+                                {
+                                    case 1:
+                                        continue;
+                                    default:
+                                        return false;
+                                }
+                            case false:
+                                switch (Content[row, column])
+                                {
+                                    case 0:
+                                        continue;
+                                    default:
+                                        return false;
+                                }
+                        }
+                    }
+                }
+                return true;
+            }
+        }
+
+        public double[,] GetMinor(int a, int b)
+        {
+            return Evaluate.Minor(Content, a, b);
+        }
 
         /// <summary>
         /// Converts matrix contents to string.
@@ -63,7 +122,6 @@ namespace Kalculus.Matrices
             }
             return stringBuilder.ToString();
         }
-
 
         /// <summary>
         /// Returns whether matrices are equal or not.
@@ -87,55 +145,5 @@ namespace Kalculus.Matrices
             return true;
         }
 
-        /// <summary>
-        /// Returns whether the matrix is a square matrix or not.
-        /// </summary>
-        public bool IsSquare()
-        {
-            if (Rows == Columns)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Returns whether the matrix is an identity matrix or not.
-        /// </summary>
-        public bool IsIdentity()
-        {
-
-            if(IsSquare() == false) return false;
-
-            for(int row = 0; row < Rows; row++)
-            {
-                for(int column = 0; column < Columns; column++)
-                {
-                    switch(row == column)
-                    {
-                        case true:
-                            switch (Content[row, column])
-                            {
-                                case 1:
-                                    continue;
-                                default:
-                                    return false;
-                            }
-                        case false:
-                            switch (Content[row, column])
-                            {
-                                case 0:
-                                    continue;
-                                default:
-                                    return false;
-                            }
-                    }
-                }
-            }
-            return true;
-        }
     }
 }

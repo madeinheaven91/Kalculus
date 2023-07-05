@@ -10,7 +10,7 @@ namespace Kalculus.Matrices
     {
         public static double? Determinant(double[,] content)
         {
-            if (content.GetLength(0) != content.GetLength(1)) 
+            if (content.GetLength(0) != content.GetLength(1))
                 throw new ArgumentException("The matrix must be square");
 
             if (content.Length == 0)
@@ -22,22 +22,35 @@ namespace Kalculus.Matrices
 
             throw new Exception();
         }
-        public static double[,] Minor(double[,] content, int row, int column)
+        public static double[,] Minor(double[,] matrix, int row, int column)
         {
-            if (content.GetLength(0) != content.GetLength(1))
+
+            if (matrix.GetLength(0) != matrix.GetLength(1))
                 throw new ArgumentException("The matrix must be square");
-            if (row <= 0 || column <= 0 || row > content.GetLength(0) - 1 || column > content.GetLength(1))
+            if (row <= 0 || column <= 0 || row > matrix.GetLength(0) - 1 || column > matrix.GetLength(1))
                 throw new ArgumentException();
 
-            double[,] minor = new double[content.GetLength(0) - 1, content.GetLength(1) - 1];
+            int size = matrix.GetLength(0);
+            double[,] minor = new double[size - 1, size - 1];
+            int m = 0, n = 0;
 
-            for (int i = 0; i < content.GetLength(0); i++)
-                for (int j = 0; j < content.GetLength(1); j++)
-                {       
-
+            for (int i = 0; i < size; i++)
+            {
+                if (i != row)
+                {
+                    for (int j = 0; j < size; j++)
+                    {
+                        if (j != column)
+                        {
+                            minor[m, n] = matrix[i, j];
+                            n++;
+                        }
+                    }
+                    m++;
+                    n = 0;
                 }
-            throw new Exception();
-
+            }
+            return minor;
         }
     }
 }
