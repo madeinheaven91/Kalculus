@@ -12,6 +12,7 @@ namespace Kalculus.Matrices
         {
             if (content.GetLength(0) != content.GetLength(1))
                 throw new ArgumentException("The matrix must be square");
+            int n = content.GetLength(0);
 
             if (content.Length == 0)
                 return null;
@@ -20,7 +21,14 @@ namespace Kalculus.Matrices
             if (content.Length == 4)
                 return (content[0, 0] * content[1, 1]) - (content[0, 1] * content[1, 0]);
 
-            throw new Exception();
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                }
+            }
+                    throw new NotImplementedException();
+
         }
         public static double[,] Minor(double[,] matrix, int row, int column)
         {
