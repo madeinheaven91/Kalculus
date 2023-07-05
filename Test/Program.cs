@@ -1,14 +1,19 @@
 ﻿using Kalculus;
 using Kalculus.Matrices;
+using Kalculus.Vectors;
+using System.Runtime.ExceptionServices;
+using System.Security;
 
+double[] dude = new double[] { 1, 2 };
+Vector vector = new(5, 1, 1);
 
+vector.PrintContent();
+Console.WriteLine(vector.Dimensions);
+Console.WriteLine(vector.Magnitude);
 
-double[,] matrix = new double[4, 4] { 
-    { 1, 0, 0, 1},
-    { 0, 1, 0, 0},
-    { 0, 0, 1, 0},
-    { 0, 0, 0, 1} };
+Vector fisrt = new(2, 1, 1);
+Vector second = new(3, 2, 0, 9);
+Vector sum = second + fisrt;
+sum.PrintContent();
 
-Matrix m = new(matrix, false);
-
-Console.WriteLine(m.IsIdentity());
+Console.WriteLine($"{sum[0]}, {sum[1]}, {sum[2]}, {sum[3]} ");
