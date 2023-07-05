@@ -20,8 +20,7 @@ namespace Kalculus.Matrices
             InitParams = initParams;
             if (initParams)
             {
-                MatrixEvaluate evaluate = new MatrixEvaluate();
-                Determinant = evaluate.Determinant(Content);
+                Determinant = Evaluate.Determinant(Content);
             }
         }
         private bool InitParams;
