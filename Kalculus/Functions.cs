@@ -8,7 +8,7 @@
             decimal low = 0;
             decimal high = arg;
 
-            while(high - low > (decimal) Basic.epsilon)
+            while(high - low > Basic.EPSILON)
             {
                 decimal mid = (low + high) / 2;
                 decimal value = (decimal) Math.Pow((double) baseValue, (double) mid);
