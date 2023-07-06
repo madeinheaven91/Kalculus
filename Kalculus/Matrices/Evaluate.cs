@@ -12,7 +12,6 @@ namespace Kalculus.Matrices
         {
             if (matrix.Rows != matrix.Columns)
                 throw new ArgumentException("The matrix must be square");
-            int n = matrix.Rows;
 
             if (matrix.Length == 0)
                 return 0;
@@ -32,14 +31,6 @@ namespace Kalculus.Matrices
             }
 
             return determinant;
-
-        }
-
-        private static Matrix MakeEmptyMatrix(int a, int b)
-        {
-            double[,] doubles = new double[a, b];
-
-            return new Matrix(doubles);
         }
 
         public static Matrix Minor(Matrix matrix, int row, int column)

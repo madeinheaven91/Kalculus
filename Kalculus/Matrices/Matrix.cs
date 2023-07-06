@@ -10,7 +10,7 @@ namespace Kalculus.Matrices
 {
     public class Matrix
     {
-        public Matrix(double[,] matrix, bool initParams = true)
+        public Matrix(double[,] matrix)
         {
             int rows = matrix.GetLength(0);
             int cols = matrix.GetLength(1);
@@ -19,14 +19,10 @@ namespace Kalculus.Matrices
             Columns = cols;
             Content = matrix;
             Length = rows * cols;
-            InitParams = initParams;
-            if (initParams)
-            {
-                Determinant = Evaluate.Determinant(this);
-            }
+            Determinant = Evaluate.Determinant(this);
+
         }
 
-        private bool InitParams;
         public int Rows { get; }
         public int Columns { get; }
         public int Length { get; }
