@@ -131,14 +131,14 @@ namespace Kalculus.LinearAlgebra.Vectors
         /// <summary>
         /// Prints the content of a vector.
         /// </summary>
-        public void PrintContent()
+        public override string ToString()
         {
             string result = "(";
             foreach (var value in Content)
             {
                 result += $"{value}, ";
             }
-            Console.WriteLine(result.Remove(result.Length - 2, 2) + ")");
+            return result.Remove(result.Length - 2, 2) + ")";
         }
         
 
