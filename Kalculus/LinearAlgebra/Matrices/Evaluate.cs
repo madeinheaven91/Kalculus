@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Kalculus.Matrices
+namespace Kalculus.LinearAlgebra.Matrices
 {
     internal static class Evaluate
     {
@@ -29,6 +29,7 @@ namespace Kalculus.Matrices
                 double subDeterminant = Determinant(subMatrix);
                 determinant += Math.Pow(-1, j) * matrix[0, j] * subDeterminant;
             }
+                    throw new NotImplementedException();
 
             return determinant;
         }

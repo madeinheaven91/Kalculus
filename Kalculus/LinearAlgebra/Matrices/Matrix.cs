@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace Kalculus.Matrices
+namespace Kalculus.LinearAlgebra.Matrices
 {
     public class Matrix
     {
