@@ -6,23 +6,15 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Intrinsics;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 /* TODO:
- * операторы:
-        умножение векторов на скаляр (*)
-        
-
     методы с 2 векторами:
         векторное произведение векторов
-        скалярное произведение векторов\
-        узнать угол между векторами
         узнать являются ли векторы линейно зависимыми ( можно обобщить для n векторов)
 
     сокращения:
         добавить сокращения для нулевого вектора, для орт и прочего
-        
-    
-
 */
 
 namespace Kalculus.LinearAlgebra.Vectors
@@ -31,11 +23,13 @@ namespace Kalculus.LinearAlgebra.Vectors
     {
         public Vector(double[] elements)
         {
+            VectorOperations.DimensionException(elements.Length);
             Content = elements;
         }
 
         public Vector(int elementCount, params double[] elements)
         {
+            VectorOperations.DimensionException(elementCount);
             Content = new double[elementCount];
             for (int i = 0; i < elementCount; i++)
             {
@@ -44,7 +38,7 @@ namespace Kalculus.LinearAlgebra.Vectors
                 {
                     Content[i] = 0;
                 }
-                else if(i >= elementCount)
+                else if (i >= elementCount)
                 {
                     break;
                 }
@@ -68,8 +62,8 @@ namespace Kalculus.LinearAlgebra.Vectors
         }
 
         public double[] Content { get; set; }
-        public int Dimensions { 
-            get { 
+        public int Dimensions {
+            get {
                 return Content.Length;
             }
             set
@@ -107,25 +101,138 @@ namespace Kalculus.LinearAlgebra.Vectors
                 return Math.Sqrt(sum);
             }
         }
+        public double MagnitudeSquared
+        {
+            get
+            {
+                double sum = 0;
+                foreach (var element in Content)
+                {
+                    sum += element * element;
+
+                }
+                return sum;
+            }
+        }
+        public Vector Normalized { get
+            {
+                return Normalize(this);
+            }
+        }
+
+        /// <summary>
+        /// Makes this vector have a magnitude of 1.
+        /// </summary>
+        /// <param name="vector"></param>
+        /// <returns></returns>
+        public static Vector Normalize(Vector vector)
+        {
+            double num = vector.Magnitude;
+            if (num > 1E-05f)
+            {
+                return vector / vector.Magnitude;
+            }
+            else
+            {
+                return new Vector(vector.Dimensions);
+            }
+        }
 
         /// <summary>
         /// Trims all zeros from the end until it reaches a non-zero vector component.
         /// </summary>
-        public void Trim()
+        
+        public Vector Trim(int min = 2)
         {
-            for (int i = this.Dimensions - 1; i > 0; i--)
+            VectorOperations.DimensionException(min);
+            Vector result = this;
+            for (int i = result.Dimensions - 1; i > 0; i--)
             {
-                if (this.Content[i] != 0)
+                if (result.Content[i] != 0)
                 {
-                    this.Dimensions = i + 1;
-                    break;
+                    result.Dimensions = i + 1;
+                    return result;
                 }
-                if(i == 1)
+                if (i == min - 1)
                 {
-                    this.Dimensions = 2;
-                    break;
+                    result.Dimensions = min;
+                    return result;
                 }
             }
+            return result;
+        }
+
+        /// <summary>
+        /// Makes the vector with less dimensions out of 2 have the same amount as the other.
+        /// </summary>
+        /// <param name="First vector"></param>
+        /// <param name="Second vector"></param>
+        public static void EquateDimensions(Vector first, Vector second)
+        {
+            if (first.Dimensions > second.Dimensions)
+            {
+                second.Dimensions = first.Dimensions;
+            }
+            else
+            {
+                first.Dimensions = second.Dimensions;
+            }
+        }
+
+        /// <summary>
+        /// Makes the vector has the same amount of dimension as the other.
+        /// </summary>
+        public Vector EquateDimensions(Vector vector)
+        {
+            this.Dimensions = vector.Dimensions;
+            return this;
+        }
+
+        /// <summary>
+        /// Calculates the dot product of 2 vectors.
+        /// </summary>
+        /// <param name="First vector"></param>
+        /// <param name="Second vector"></param>
+        /// <returns></returns>
+        public static double DotProduct(Vector first, Vector second)
+        {
+            EquateDimensions(first, second);
+
+            double product = 0;
+            for (int i = 0; i < first.Dimensions; i++)
+            {
+                product += first.Content[i] * second.Content[i];
+            }
+
+            return product;
+        }
+
+        /// <summary>
+        /// Calculates the angle between 2 vectors.
+        /// </summary>
+        /// <param name="First vector"></param>
+        /// <param name="Second vector"></param>
+        /// <param name="Is angle in radians?"></param>
+        /// <returns></returns>
+        public static double Angle(Vector first, Vector second, bool inRadians = true)
+        {
+
+            double cos = DotProduct(first, second) / (first.Magnitude * second.Magnitude);
+            if (inRadians) return Math.Acos(cos);
+            else return Math.Acos(cos) * 180 / Math.PI;
+
+        }
+
+        // TODO
+        /// <summary>
+        /// Returns whether two vectors are linearly dependent.
+        /// </summary>
+        /// <param name="first"></param>
+        /// <param name="second"></param>
+        /// <returns></returns>
+        public static bool AreLinearlyDependent(Vector first, Vector second)
+        {
+            return false;
         }
 
         /// <summary>
@@ -140,7 +247,24 @@ namespace Kalculus.LinearAlgebra.Vectors
             }
             Console.WriteLine(result.Remove(result.Length - 2, 2) + ")");
         }
-        
+
+        public static Vector Zero(int dimensions = 2){
+            return new Vector(dimensions);
+        }
+        public static Vector IUnit(int dimensions = 2)
+        {
+            return new Vector(dimensions, 1);
+        }
+        public static Vector JUnit(int dimensions = 2)
+        {
+            return new Vector(dimensions, 0, 1);
+        }
+        public static Vector KUnit(int dimensions = 3)
+        {
+            VectorOperations.DimensionException(dimensions, 3);
+            return new Vector(dimensions, 0, 0, 1);
+        }
+
 
         public static Vector operator +(Vector firstVector, Vector secondVector)
         {
@@ -203,7 +327,6 @@ namespace Kalculus.LinearAlgebra.Vectors
             }
             return vector;
         }
-
         public static Vector operator *(double scalar, Vector vector)
         {
             for (int i = 0; i < vector.Dimensions; i++)
@@ -217,6 +340,14 @@ namespace Kalculus.LinearAlgebra.Vectors
             for (int i = 0; i < vector.Dimensions; i++)
             {
                 vector.Content[i] *= scalar;
+            }
+            return vector;
+        }
+        public static Vector operator /(Vector vector, double scalar)
+        {
+            for (int i = 0; i < vector.Dimensions; i++)
+            {
+                vector.Content[i] /= scalar;
             }
             return vector;
         }
