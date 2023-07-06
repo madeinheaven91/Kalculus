@@ -4,12 +4,13 @@ using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Kalculus.Matrices
 {
     public class Matrix
     {
-        public Matrix(double[,] matrix, bool initParams = false)
+        public Matrix(double[,] matrix, bool initParams = true)
         {
             int rows = matrix.GetLength(0);
             int cols = matrix.GetLength(1);
@@ -17,34 +18,21 @@ namespace Kalculus.Matrices
             Rows = rows;
             Columns = cols;
             Content = matrix;
-            ElementsCount = rows * cols;
+            Length = rows * cols;
             InitParams = initParams;
             if (initParams)
             {
-                Determinant = Evaluate.Determinant(Content);
-            }
-        }
-
-        public Matrix(int rows, int columns, bool initParams = false)
-        {
-            Rows = rows;
-            Columns = columns;
-            Content = new double[rows, columns];
-            ElementsCount = rows * columns;
-            InitParams = initParams;
-            if (initParams)
-            {
-                Determinant = Evaluate.Determinant(Content);
+                Determinant = Evaluate.Determinant(this);
             }
         }
 
         private bool InitParams;
         public int Rows { get; }
         public int Columns { get; }
-        public int ElementsCount { get; }
+        public int Length { get; }
         public double? Determinant { get; }
         public double[,] Content { get; set; }
- 
+
         /// <summary>
         /// Returns whether the matrix is a square matrix or not.
         /// </summary>
@@ -113,9 +101,9 @@ namespace Kalculus.Matrices
             }
         }
 
-        public double[,] GetMinor(int a, int b)
+        public Matrix GetMinor(int a, int b)
         {
-            return Evaluate.Minor(Content, a, b);
+            return Evaluate.Minor(this, a, b);
         }
 
         /// <summary>
@@ -123,18 +111,53 @@ namespace Kalculus.Matrices
         /// </summary>
         public override string ToString()
         {
-            StringBuilder stringBuilder = new StringBuilder();
-            for (int i = 0; i < Rows; i++)
+            int rows = Rows;
+            int cols = Rows;
+
+            int maxLength = GetMaxLength() + 1;
+            StringBuilder sb = new StringBuilder();
+
+
+            for (int i = 0; i < rows; i++)
             {
-                for (int j = 0; j < Columns; j++)
+                for (int j = 0; j < cols; j++)
                 {
-                    stringBuilder.Append(Content[i, j]);
+                    string value = Content[i, j].ToString(); 
+                    int columnWidth = maxLength; 
+
+                    sb.Append(value);
+
+                    if (j < cols - 1)
+                    {
+                        int spacesToAdd = columnWidth - value.Length;
+                        sb.Append(new string(' ', spacesToAdd + 1));
+                    }
                 }
-                stringBuilder.Append('\n');
+
+                sb.AppendLine(); 
             }
-            return stringBuilder.ToString();
+
+            return sb.ToString();
         }
 
+        private int GetMaxLength()
+        {
+            double[,] array = Content;
+            int maxLength = 0;
+
+            foreach (var item in array)
+            {
+                string stringValue = item.ToString();
+                int length = stringValue.Length;
+
+                if (length > maxLength)
+                {
+                    maxLength = length;
+                }
+            }
+
+            return maxLength;
+        }
         /// <summary>
         /// Returns whether matrices are equal or not.
         /// </summary>
@@ -157,5 +180,27 @@ namespace Kalculus.Matrices
             return true;
         }
 
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Rows, Columns);
+        }
+
+        public static Matrix operator *(double scalar, Matrix matrix)
+        {
+            int rows = matrix.Rows;
+            int cols = matrix.Columns;
+
+            double[,] result = new double[rows, cols];
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    result[i, j] = scalar * matrix[i, j];
+                }
+            }
+
+            return new Matrix(result);
+        }
     }
 }

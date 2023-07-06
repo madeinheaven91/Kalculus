@@ -8,37 +8,49 @@ namespace Kalculus.Matrices
 {
     internal static class Evaluate
     {
-        public static double? Determinant(double[,] content)
+        public static double Determinant(Matrix matrix)
         {
-            if (content.GetLength(0) != content.GetLength(1))
+            if (matrix.Rows != matrix.Columns)
                 throw new ArgumentException("The matrix must be square");
-            int n = content.GetLength(0);
+            int n = matrix.Rows;
 
-            if (content.Length == 0)
-                return null;
-            if (content.Length == 1)
-                return content[0, 0];
-            if (content.Length == 4)
-                return (content[0, 0] * content[1, 1]) - (content[0, 1] * content[1, 0]);
+            if (matrix.Length == 0)
+                return 0;
+            if (matrix.Length == 1)
+                return matrix[0, 0];
+            if (matrix.Length == 4)
+                return (matrix[0, 0] * matrix[1, 1]) - (matrix[0, 1] * matrix[1, 0]);
 
-            for (int i = 0; i < n; i++)
+
+            double determinant = 0;
+
+            for (int j = 0; j < matrix.Columns; j++)
             {
-                for (int j = 0; j < n; j++)
-                {
-
-                }
+                Matrix subMatrix = Minor(matrix, 0, j);
+                double subDeterminant = Determinant(subMatrix);
+                determinant += Math.Pow(-1, j) * matrix[0, j] * subDeterminant;
             }
 
+            return determinant;
+
         }
-        public static double[,] Minor(double[,] matrix, int row, int column)
+
+        private static Matrix MakeEmptyMatrix(int a, int b)
+        {
+            double[,] doubles = new double[a, b];
+
+            return new Matrix(doubles);
+        }
+
+        public static Matrix Minor(Matrix matrix, int row, int column)
         {
 
-            if (matrix.GetLength(0) != matrix.GetLength(1))
+            if (matrix.Rows != matrix.Columns)
                 throw new ArgumentException("The matrix must be square");
-            if (row <= 0 || column <= 0 || row > matrix.GetLength(0) - 1 || column > matrix.GetLength(1))
+            if (row < 0 || column < 0 || row > matrix.Rows - 1 || column > matrix.Columns)
                 throw new ArgumentException();
 
-            int size = matrix.GetLength(0);
+            int size = matrix.Rows;
             double[,] minor = new double[size - 1, size - 1];
             int m = 0, n = 0;
 
@@ -58,7 +70,7 @@ namespace Kalculus.Matrices
                     n = 0;
                 }
             }
-            return minor;
+            return new Matrix(minor);
         }
     }
 }
