@@ -29,8 +29,6 @@ namespace Kalculus.LinearAlgebra.Matrices
                 double subDeterminant = Determinant(subMatrix);
                 determinant += Math.Pow(-1, j) * matrix[0, j] * subDeterminant;
             }
-                    throw new NotImplementedException();
-
             return determinant;
         }
 
