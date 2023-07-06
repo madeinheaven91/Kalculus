@@ -5,7 +5,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Kalculus.Matrices
+namespace Kalculus.LinearAlgebra.Matrices
 {
     public class Matrix
     {
@@ -44,7 +44,7 @@ namespace Kalculus.Matrices
         public int ElementsCount { get; }
         public double? Determinant { get; }
         public double[,] Content { get; set; }
- 
+
         /// <summary>
         /// Returns whether the matrix is a square matrix or not.
         /// </summary>

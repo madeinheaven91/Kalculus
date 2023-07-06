@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Kalculus.Matrices
+namespace Kalculus.LinearAlgebra.Matrices
 {
     internal static class Evaluate
     {
@@ -19,7 +19,7 @@ namespace Kalculus.Matrices
             if (content.Length == 1)
                 return content[0, 0];
             if (content.Length == 4)
-                return (content[0, 0] * content[1, 1]) - (content[0, 1] * content[1, 0]);
+                return content[0, 0] * content[1, 1] - content[0, 1] * content[1, 0];
 
             for (int i = 0; i < n; i++)
             {
@@ -27,7 +27,7 @@ namespace Kalculus.Matrices
                 {
                 }
             }
-                    throw new NotImplementedException();
+            throw new NotImplementedException();
 
         }
         public static double[,] Minor(double[,] matrix, int row, int column)
