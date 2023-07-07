@@ -5,7 +5,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Kalculus.LinearAlgebra.Matrices
+namespace Kalculus.LinearAlgebra
 {
     public partial class Matrix
     {
@@ -154,7 +154,7 @@ namespace Kalculus.LinearAlgebra.Matrices
             int cols = Rows;
 
             int maxLength = NumberMaxLength + 1;
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
 
 
             for (int i = 0; i < rows; i++)

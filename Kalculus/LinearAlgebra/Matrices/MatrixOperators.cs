@@ -5,9 +5,9 @@ using System.Net.Http.Headers;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-using Kalculus.LinearAlgebra.Matrices;
+using Kalculus.LinearAlgebra;
 
-namespace Kalculus.LinearAlgebra.Matrices
+namespace Kalculus.LinearAlgebra
 {
     public partial class Matrix
     {

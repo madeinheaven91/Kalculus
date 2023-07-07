@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Kalculus.LinearAlgebra;
-using Kalculus.LinearAlgebra.Matrices;
 /*
  * TODO:
  *  разобраться че вообще происходит

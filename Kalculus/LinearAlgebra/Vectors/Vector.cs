@@ -7,7 +7,7 @@ using System.Runtime.Intrinsics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Kalculus.LinearAlgebra.Matrices;
+using Kalculus.LinearAlgebra;
 
 /* TODO:
  *  GetHashCode();
@@ -340,15 +340,9 @@ namespace Kalculus.LinearAlgebra
                 return false;
             }
 
-            for (int i = 0; i < Dimensions; i++)
-            {
-                if (Content[i] != vector[i])
-                {
-                    return false;
-                }
-            }
+            if (Content == vector.Content) return true;
 
-            return true;
+            return false;
         }
         public override int GetHashCode()
         {

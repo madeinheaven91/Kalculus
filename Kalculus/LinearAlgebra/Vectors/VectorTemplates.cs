@@ -60,7 +60,7 @@ namespace Kalculus.LinearAlgebra
                 default:
                     if (n < 1) throw new Exception("Unable to create a unit vector with less than 1 dimension.");
                     Helper.DimensionException(dimensions);
-                    Vector unitVector = new Vector(n);
+                    Vector unitVector = new(n);
                     unitVector[n-1] = 1;
                     return unitVector;
             }
