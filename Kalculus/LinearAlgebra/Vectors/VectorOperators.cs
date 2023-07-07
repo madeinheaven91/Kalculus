@@ -91,15 +91,7 @@ namespace Kalculus.LinearAlgebra
             }
             return vector;
         }
-        public static bool operator ==(Vector first, Vector second)
-        {
-            if (first.Equals(second)) return true;
-            return false;
-        }
-        public static bool operator !=(Vector first, Vector second)
-        {
-            if (first.Equals(second)) return false;
-            return true;
-        }
+        public static bool operator ==(Vector first, Vector second) => (first.Equals(second));
+        public static bool operator !=(Vector first, Vector second) => (first.Equals(second));
     }
 }

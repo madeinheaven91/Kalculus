@@ -116,7 +116,21 @@ namespace Kalculus.LinearAlgebra
                 return Normalize(this);
             }
         }
-        public Space? Space { get; set; }
+        private Space? space;
+        public Space? Space {
+            get
+            {
+                if (space is null) return null;
+                return space;
+            }
+            set
+            {
+                if (space is not null) space.Vectors.Remove(this);
+                if (Dimensions != value.Dimensions) this.EquateDimensions(value.Dimensions);
+                space = value;
+                space.Vectors.Add(this);
+            }
+        }
         /// <summary>
         /// Makes this vector have a magnitude of 1.
         /// </summary>
@@ -315,11 +329,7 @@ namespace Kalculus.LinearAlgebra
         /// <param name="first"></param>
         /// <param name="second"></param>
         /// <returns></returns>
-        public static bool AreOrthogonal(Vector first, Vector second)
-        {
-            if(DotProduct(first, second) == 0) return true;
-            return false;
-        }
+        public static bool AreOrthogonal(Vector first, Vector second) => DotProduct(first, second) == 0;
 
         public override string ToString()
         {
@@ -349,12 +359,6 @@ namespace Kalculus.LinearAlgebra
             }
 
             return true;
-        }
-        public override int GetHashCode()
-        {
-            return 0;
-        }
-
-        
+        }        
     }
 }

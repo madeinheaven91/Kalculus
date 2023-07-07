@@ -45,7 +45,13 @@ namespace Kalculus.LinearAlgebra
             Helper.DimensionException(dimensions);
             return new Vector(dimensions, 0, 0, 1);
         }
-
+        /// <summary>
+        /// Returns the unit vector of a given dimension.
+        /// </summary>
+        /// <param name="n"></param>
+        /// <param name="dimensions"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static Vector UnitN(int n, int dimensions = 2)
         {
             switch (n) {

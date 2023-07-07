@@ -136,6 +136,26 @@ namespace Kalculus.LinearAlgebra
         {
             return Evaluate.Minor(this, a, b);
         }
+
+        public Vector GetColumn(int column)
+        {
+            Vector vector = new(Rows);
+            for(int i = 0; i < Rows; i++)
+            {
+                vector[i] = Content[column, i];
+            }
+            return vector;
+        }
+        public Vector[] ToVectorArray()
+        {
+            Vector[] vectors = new Vector[Columns];
+            for(int i = 0; i < Columns; i++)
+            {
+                vectors[i] = this.GetColumn(i);
+            }
+
+            return vectors;
+        }
         public double this[int i, int j]
         {
             get
