@@ -340,9 +340,15 @@ namespace Kalculus.LinearAlgebra
                 return false;
             }
 
-            if (Content == vector.Content) return true;
+            for (int i = 0; i < Dimensions; i++)
+            {
+                if (Content[i] != vector[i])
+                {
+                    return false;
+                }
+            }
 
-            return false;
+            return true;
         }
         public override int GetHashCode()
         {
