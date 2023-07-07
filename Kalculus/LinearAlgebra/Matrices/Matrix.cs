@@ -9,6 +9,12 @@ namespace Kalculus.LinearAlgebra.Matrices
 {
     public class Matrix
     {
+        
+        public Matrix(int n) : this(GetIndentityMatrix(n))
+        {
+
+        }
+
         public Matrix(double[,] matrix)
         {
             int rows = matrix.GetLength(0);
@@ -84,6 +90,45 @@ namespace Kalculus.LinearAlgebra.Matrices
             }
         }
 
+        private int NumberMaxLength
+        {
+            get
+            {
+                double[,] array = Content;
+                int maxLength = 0;
+
+                foreach (var item in array)
+                {
+                    string stringValue = item.ToString();
+                    int length = stringValue.Length;
+
+                    if (length > maxLength)
+                    {
+                        maxLength = length;
+                    }
+                }
+
+                return maxLength;
+            }
+        }
+
+        private static double[,] GetIndentityMatrix(int n) 
+        {
+            double[,] matrix = new double[n,n];
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    if (i == j)
+                        matrix[i, j] = 1;
+                    else
+                        matrix[i, j] = 0;
+                }
+            }
+
+            return matrix;
+        }
+
         public double this[int i, int j]
         {
             get
@@ -109,7 +154,7 @@ namespace Kalculus.LinearAlgebra.Matrices
             int rows = Rows;
             int cols = Rows;
 
-            int maxLength = GetNumberMaxLength() + 1;
+            int maxLength = NumberMaxLength + 1;
             StringBuilder sb = new StringBuilder();
 
 
@@ -135,24 +180,7 @@ namespace Kalculus.LinearAlgebra.Matrices
             return sb.ToString();
         }
 
-        private int GetNumberMaxLength()
-        {
-            double[,] array = Content;
-            int maxLength = 0;
 
-            foreach (var item in array)
-            {
-                string stringValue = item.ToString();
-                int length = stringValue.Length;
-
-                if (length > maxLength)
-                {
-                    maxLength = length;
-                }
-            }
-
-            return maxLength;
-        }
         /// <summary>
         /// Returns whether matrices are equal or not.
         /// </summary>
