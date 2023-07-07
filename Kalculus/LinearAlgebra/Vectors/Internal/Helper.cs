@@ -14,11 +14,11 @@ using System.Xml.Linq;
 
 */
 
-namespace Kalculus.LinearAlgebra.Vectors
+namespace Kalculus.LinearAlgebra
 {
-    internal static class VectorOperations
+    internal static class Helper
     {
-        public static void DimensionException(int dimensions, int min = 2)
+        public static void DimensionException(int? dimensions, int min = 2)
         {
             if (dimensions < min) throw new Exception($"The vector has less dimensions than {min}.");
         }
