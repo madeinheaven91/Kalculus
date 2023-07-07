@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Kalculus.LinearAlgebra.Matrices
 {
-    public class Matrix
+    public partial class Matrix
     {
         
         public Matrix(int n) : this(GetIndentityMatrix(n))
@@ -28,11 +28,50 @@ namespace Kalculus.LinearAlgebra.Matrices
 
         }
 
+        private int NumberMaxLength
+        {
+            get
+            {
+                double[,] array = Content;
+                int maxLength = 0;
+
+                foreach (var item in array)
+                {
+                    string stringValue = item.ToString();
+                    int length = stringValue.Length;
+
+                    if (length > maxLength)
+                    {
+                        maxLength = length;
+                    }
+                }
+
+                return maxLength;
+            }
+        }
+
         public int Rows { get; }
         public int Columns { get; }
         public int Length { get; }
         public double? Determinant { get; }
         public double[,] Content { get; set; }
+
+        private static double[,] GetIndentityMatrix(int n)
+        {
+            double[,] matrix = new double[n, n];
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    if (i == j)
+                        matrix[i, j] = 1;
+                    else
+                        matrix[i, j] = 0;
+                }
+            }
+
+            return matrix;
+        }
 
         /// <summary>
         /// Returns whether the matrix is a square matrix or not.
@@ -90,45 +129,13 @@ namespace Kalculus.LinearAlgebra.Matrices
             }
         }
 
-        private int NumberMaxLength
+        /// <summary>
+        /// Returns a minor matrix with an element in row a and in column b
+        /// </summary>
+        public Matrix GetMinor(int a, int b)
         {
-            get
-            {
-                double[,] array = Content;
-                int maxLength = 0;
-
-                foreach (var item in array)
-                {
-                    string stringValue = item.ToString();
-                    int length = stringValue.Length;
-
-                    if (length > maxLength)
-                    {
-                        maxLength = length;
-                    }
-                }
-
-                return maxLength;
-            }
+            return Evaluate.Minor(this, a, b);
         }
-
-        private static double[,] GetIndentityMatrix(int n) 
-        {
-            double[,] matrix = new double[n,n];
-            for (int i = 0; i < n; i++)
-            {
-                for (int j = 0; j < n; j++)
-                {
-                    if (i == j)
-                        matrix[i, j] = 1;
-                    else
-                        matrix[i, j] = 0;
-                }
-            }
-
-            return matrix;
-        }
-
         public double this[int i, int j]
         {
             get
@@ -141,14 +148,6 @@ namespace Kalculus.LinearAlgebra.Matrices
             }
         }
 
-        public Matrix GetMinor(int a, int b)
-        {
-            return Evaluate.Minor(this, a, b);
-        }
-
-        /// <summary>
-        /// Converts matrix contents to string.
-        /// </summary>
         public override string ToString()
         {
             int rows = Rows;
@@ -162,6 +161,8 @@ namespace Kalculus.LinearAlgebra.Matrices
             {
                 for (int j = 0; j < cols; j++)
                 {
+                    if (Content[i, j] == -0)
+                        Content[i, j] = 0;
                     string value = Content[i, j].ToString(); 
                     int columnWidth = maxLength; 
 
@@ -180,10 +181,6 @@ namespace Kalculus.LinearAlgebra.Matrices
             return sb.ToString();
         }
 
-
-        /// <summary>
-        /// Returns whether matrices are equal or not.
-        /// </summary>
         public override bool Equals(object? obj)
         {
             if (obj == null || GetType() != obj.GetType() || obj is not Matrix)
@@ -208,22 +205,5 @@ namespace Kalculus.LinearAlgebra.Matrices
             return HashCode.Combine(Rows, Columns);
         }
 
-        public static Matrix operator *(double scalar, Matrix matrix)
-        {
-            int rows = matrix.Rows;
-            int cols = matrix.Columns;
-
-            double[,] result = new double[rows, cols];
-
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < cols; j++)
-                {
-                    result[i, j] = scalar * matrix[i, j];
-                }
-            }
-
-            return new Matrix(result);
-        }
     }
 }
