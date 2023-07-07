@@ -10,7 +10,7 @@ namespace Kalculus.LinearAlgebra.Matrices
     public partial class Matrix
     {
         
-        public Matrix(int n) : this(GetIndentityMatrix(n))
+        public Matrix(int n) : this(Evaluate.GetIndentityMatrix(n))
         {
 
         }
@@ -55,23 +55,6 @@ namespace Kalculus.LinearAlgebra.Matrices
         public int Length { get; }
         public double? Determinant { get; }
         public double[,] Content { get; set; }
-
-        private static double[,] GetIndentityMatrix(int n)
-        {
-            double[,] matrix = new double[n, n];
-            for (int i = 0; i < n; i++)
-            {
-                for (int j = 0; j < n; j++)
-                {
-                    if (i == j)
-                        matrix[i, j] = 1;
-                    else
-                        matrix[i, j] = 0;
-                }
-            }
-
-            return matrix;
-        }
 
         /// <summary>
         /// Returns whether the matrix is a square matrix or not.
