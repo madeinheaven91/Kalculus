@@ -109,7 +109,7 @@ namespace Kalculus.LinearAlgebra.Matrices
             int rows = Rows;
             int cols = Rows;
 
-            int maxLength = GetMaxLength() + 1;
+            int maxLength = GetNumberMaxLength() + 1;
             StringBuilder sb = new StringBuilder();
 
 
@@ -135,7 +135,7 @@ namespace Kalculus.LinearAlgebra.Matrices
             return sb.ToString();
         }
 
-        private int GetMaxLength()
+        private int GetNumberMaxLength()
         {
             double[,] array = Content;
             int maxLength = 0;
