@@ -10,7 +10,7 @@ namespace Kalculus.LinearAlgebra.Matrices
     public partial class Matrix
     {
         
-        public Matrix(int n) : this(Evaluate.GetIndentityMatrix(n))
+        public Matrix(int n) : this(Evaluate.GetIdentityMatrix(n))
         {
 
         }

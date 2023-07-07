@@ -110,7 +110,7 @@ namespace Kalculus.LinearAlgebra.Matrices
             return new Matrix(result);
         }
 
-        public static double[,] GetIndentityMatrix(int n)
+        public static double[,] GetIdentityMatrix(int n)
         {
             double[,] matrix = new double[n, n];
             for (int i = 0; i < n; i++)
