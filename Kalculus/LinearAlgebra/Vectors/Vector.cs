@@ -248,18 +248,30 @@ namespace Kalculus.LinearAlgebra.Vectors
             return result.Remove(result.Length - 2, 2) + ")";
         }
 
+        /// <summary>
+        /// Returns the zero vector of a given dimension.
+        /// </summary>
         public static Vector Zero(int dimensions = 2){
             return new Vector(dimensions);
         }
-        public static Vector IUnit(int dimensions = 2)
+        /// <summary>
+        /// Returns the i unit vector of a given dimension.
+        /// </summary>
+        public static Vector UnitX(int dimensions = 2)
         {
             return new Vector(dimensions, 1);
         }
-        public static Vector JUnit(int dimensions = 2)
+        /// <summary>
+        /// Returns the j unit vector of a given dimension.
+        /// </summary>
+        public static Vector UnitY(int dimensions = 2)
         {
             return new Vector(dimensions, 0, 1);
         }
-        public static Vector KUnit(int dimensions = 3)
+        /// <summary>
+        /// Returns the k unit vector of a given dimension (minimum 3).
+        /// </summary>
+        public static Vector UnitZ(int dimensions = 3)
         {
             VectorOperations.DimensionException(dimensions, 3);
             return new Vector(dimensions, 0, 0, 1);
