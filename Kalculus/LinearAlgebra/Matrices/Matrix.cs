@@ -24,8 +24,7 @@ namespace Kalculus.LinearAlgebra
             Columns = cols;
             Content = matrix;
             Length = rows * cols;
-            Determinant = Evaluate.Determinant(this);
-
+            if(rows == cols) Determinant = Evaluate.Determinant(this);
         }
 
         private int NumberMaxLength
@@ -140,8 +139,9 @@ namespace Kalculus.LinearAlgebra
         public Vector GetColumn(int column)
         {
             Vector vector = new(Rows);
-            for(int i = 0; i < Rows; i++)
+            for(int i = 0; i < Rows - 1; i++)
             {
+                
                 vector[i] = Content[column, i];
             }
             return vector;
@@ -156,15 +156,15 @@ namespace Kalculus.LinearAlgebra
 
             return vectors;
         }
-        public double this[int i, int j]
+        public double this[int column, int row]
         {
             get
             {
-                return Content[i, j];
+                return Content[column, row];
             }
             set
             {
-                Content[i, j] = value;
+                Content[row, column] = value;
             }
         }
 

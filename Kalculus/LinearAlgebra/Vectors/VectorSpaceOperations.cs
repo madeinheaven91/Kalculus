@@ -9,8 +9,8 @@ namespace Kalculus.LinearAlgebra
     public partial class Vector
     {
         private Vector ScaleToSpace() {
-            
-            return
+
+            return this;
         }
     }
 }

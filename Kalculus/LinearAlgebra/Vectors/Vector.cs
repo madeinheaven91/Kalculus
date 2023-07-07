@@ -13,6 +13,10 @@ using Kalculus.LinearAlgebra;
  *  GetHashCode();
  *  CrossProduct(Vector rhs, Vector lhs);
  *  TripleProduct(Vector first, Vector second, Vector third);
+ *  Spacial Operations:
+ *      Scale to space:
+ *          берет базисные векторы пространства и подгоняет координаты вектора под эти базисы.
+ *          сделать это можно по типу умножения матрицы на вектор Av = w, где A - матрица, состоящая из базисных векторов пространства, v - исходный вектор, w - результат
 */
 
 namespace Kalculus.LinearAlgebra
@@ -125,7 +129,7 @@ namespace Kalculus.LinearAlgebra
             }
             set
             {
-                if (space is not null) space.Vectors.Remove(this);
+                space?.Vectors.Remove(this);
                 if (Dimensions != value.Dimensions) this.EquateDimensions(value.Dimensions);
                 space = value;
                 space.Vectors.Add(this);
