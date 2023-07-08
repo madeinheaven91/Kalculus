@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Kalculus.LinearAlgebra;
+using Kalculus.LinearAlgebra.Vectors;
+using Kalculus.LinearAlgebra.Matrices;
+
 using static System.Net.Mime.MediaTypeNames;
 /*
  * TODO:

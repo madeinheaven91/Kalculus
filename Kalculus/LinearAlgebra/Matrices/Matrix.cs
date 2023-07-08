@@ -5,6 +5,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using Kalculus.LinearAlgebra.Matrices;
+using Kalculus.LinearAlgebra.Vectors;
 
 namespace Kalculus.LinearAlgebra.Matrices
 {
