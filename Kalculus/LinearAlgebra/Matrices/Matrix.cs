@@ -11,7 +11,7 @@ namespace Kalculus.LinearAlgebra.Matrices
 {
     public partial class Matrix
     {
-        
+
         public Matrix(int n) : this(Evaluate.GetIdentityMatrix(n))
         {
 
@@ -26,7 +26,7 @@ namespace Kalculus.LinearAlgebra.Matrices
             Columns = cols;
             Content = matrix;
             Length = rows * cols;
-            if(rows == cols) Determinant = Evaluate.Determinant(this);
+            if (rows == cols) Determinant = Evaluate.Determinant(this);
         }
 
         private int NumberMaxLength
@@ -56,6 +56,15 @@ namespace Kalculus.LinearAlgebra.Matrices
         public int Length { get; }
         public double? Determinant { get; }
         public double[,] Content { get; set; }
+        public int Order
+        {
+            get
+            {
+                if (IsSquare)
+                    return Columns;
+                throw new ArgumentException("This matrix isn't square");
+            }
+        }
 
         /// <summary>
         /// Returns whether the matrix is a square matrix or not.
@@ -124,9 +133,9 @@ namespace Kalculus.LinearAlgebra.Matrices
         public Vector GetColumn(int column)
         {
             Vector vector = new(Rows);
-            for(int i = 0; i < Rows; i++)
+            for (int i = 0; i < Rows; i++)
             {
-                
+
                 vector[i] = Content[i, column];
             }
             return vector;
@@ -134,7 +143,7 @@ namespace Kalculus.LinearAlgebra.Matrices
         public Vector[] ToVectorArray()
         {
             Vector[] vectors = new Vector[Columns];
-            for(int i = 0; i < Columns; i++)
+            for (int i = 0; i < Columns; i++)
             {
                 vectors[i] = this.GetColumn(i);
             }
@@ -168,8 +177,8 @@ namespace Kalculus.LinearAlgebra.Matrices
                 {
                     if (Content[i, j] == -0)
                         Content[i, j] = 0;
-                    string value = Content[i, j].ToString(); 
-                    int columnWidth = maxLength; 
+                    string value = Content[i, j].ToString();
+                    int columnWidth = maxLength;
 
                     sb.Append(value);
 
@@ -180,7 +189,7 @@ namespace Kalculus.LinearAlgebra.Matrices
                     }
                 }
 
-                sb.AppendLine(); 
+                sb.AppendLine();
             }
 
             return sb.ToString();

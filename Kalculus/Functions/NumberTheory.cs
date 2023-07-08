@@ -5,9 +5,9 @@ using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Kalculus
+namespace Kalculus.Functions
 {
-    public static class IntegerExtension
+    public static class Calculate
     {
         public static int[] Factorize(this int value)
         {
@@ -26,21 +26,7 @@ namespace Kalculus
             }
             return result.ToArray();
         }
-        public static int Factorial(this int value)
-        {
-            int result = 1;
 
-            for(int i = 1; i < value + 1; i++)
-            {
-                result *= i;
-            }
-
-            return result;
-        }
-    }
-
-    public static class Calculate
-    {
         public static int GCF(int first, int second)
         {
            while(first != 0 && second != 0)

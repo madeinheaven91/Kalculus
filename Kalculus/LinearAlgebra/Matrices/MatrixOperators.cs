@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-using Kalculus.LinearAlgebra.Matrices;
-
-namespace Kalculus.LinearAlgebra.Matrices
+﻿namespace Kalculus.LinearAlgebra.Matrices
 {
     public partial class Matrix
     {
@@ -20,5 +11,24 @@ namespace Kalculus.LinearAlgebra.Matrices
         {
             return Evaluate.MultiplyMatrices(leftMatrix, rightMatrix);
         }
+
+        public static Matrix operator+(Matrix leftMatrix, Matrix rightMatrix)
+        {
+            if (leftMatrix.Columns != rightMatrix.Columns || leftMatrix.Rows != rightMatrix.Columns)
+                throw new ArgumentException("The matrices must have same size");
+
+            int cols = leftMatrix.Columns;
+            int rows = rightMatrix.Rows;
+            double[,] matrix = new double[rows, cols];
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    matrix[i,j] = leftMatrix[i,j] + rightMatrix[i,j];
+                }
+            }
+            return new Matrix(matrix);
+        }
+
     }
 }

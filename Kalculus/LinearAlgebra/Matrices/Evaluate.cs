@@ -110,6 +110,24 @@ namespace Kalculus.LinearAlgebra.Matrices
             return new Matrix(result);
         }
 
+        public static Matrix MatrixSubtraction(Matrix leftMatrix, Matrix rightMatrix)
+        {
+            if (leftMatrix.Columns != rightMatrix.Columns || leftMatrix.Rows != rightMatrix.Columns)
+                throw new ArgumentException("The matrices must have same size");
+
+            int cols = leftMatrix.Columns;
+            int rows = rightMatrix.Rows;
+            double[,] matrix = new double[rows, cols];
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    matrix[i, j] = leftMatrix[i, j] + rightMatrix[i, j];
+                }
+            }
+            return new Matrix(matrix);
+        }
+
         public static double[,] GetIdentityMatrix(int n)
         {
             double[,] matrix = new double[n, n];
