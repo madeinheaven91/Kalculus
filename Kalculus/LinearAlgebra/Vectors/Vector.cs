@@ -7,7 +7,7 @@ using System.Runtime.Intrinsics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Kalculus.LinearAlgebra;
+using Kalculus.LinearAlgebra.Vectors;
 
 /* TODO:
  *  GetHashCode();

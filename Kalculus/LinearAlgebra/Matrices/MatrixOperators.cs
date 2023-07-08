@@ -5,7 +5,7 @@ using System.Net.Http.Headers;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-using Kalculus.LinearAlgebra;
+using Kalculus.LinearAlgebra.Matrices;
 
 namespace Kalculus.LinearAlgebra
 {

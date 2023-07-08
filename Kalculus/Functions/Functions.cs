@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Kalculus
 {
-    public static partial class IntExtension
+    public static partial class IntegerExtension
     {
         public static int Factorial(this int value)
         {

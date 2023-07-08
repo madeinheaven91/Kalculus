@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Kalculus.LinearAlgebra
+namespace Kalculus.LinearAlgebra.Matrices
 {
     internal static class Evaluate
     {
@@ -18,7 +18,7 @@ namespace Kalculus.LinearAlgebra
             if (matrix.Length == 1)
                 return matrix[0, 0];
             if (matrix.Length == 4)
-                return (matrix[0, 0] * matrix[1, 1]) - (matrix[0, 1] * matrix[1, 0]);
+                return matrix[0, 0] * matrix[1, 1] - matrix[0, 1] * matrix[1, 0];
 
 
             double determinant = 0;
@@ -81,7 +81,7 @@ namespace Kalculus.LinearAlgebra
             return new Matrix(result);
         }
 
-        public static Matrix MultiplyMatrices(Matrix leftMatrix, Matrix rightMatrix) 
+        public static Matrix MultiplyMatrices(Matrix leftMatrix, Matrix rightMatrix)
         {
             if (leftMatrix.Columns != rightMatrix.Rows)
             {

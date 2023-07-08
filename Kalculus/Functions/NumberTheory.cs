@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Kalculus
 {
-    public static class IntExtension
+    public static class IntegerExtension
     {
         public static int[] Factorize(this int value)
         {

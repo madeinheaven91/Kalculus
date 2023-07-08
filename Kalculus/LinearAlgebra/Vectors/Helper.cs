@@ -14,7 +14,7 @@ using System.Xml.Linq;
 
 */
 
-namespace Kalculus.LinearAlgebra
+namespace Kalculus.LinearAlgebra.Vectors
 {
     internal static class Helper
     {
