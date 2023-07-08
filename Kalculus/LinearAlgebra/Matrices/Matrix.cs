@@ -139,10 +139,10 @@ namespace Kalculus.LinearAlgebra
         public Vector GetColumn(int column)
         {
             Vector vector = new(Rows);
-            for(int i = 0; i < Rows - 1; i++)
+            for(int i = 0; i < Rows; i++)
             {
                 
-                vector[i] = Content[column, i];
+                vector[i] = Content[i, column];
             }
             return vector;
         }
@@ -160,7 +160,7 @@ namespace Kalculus.LinearAlgebra
         {
             get
             {
-                return Content[column, row];
+                return Content[row, column];
             }
             set
             {
@@ -171,7 +171,7 @@ namespace Kalculus.LinearAlgebra
         public override string ToString()
         {
             int rows = Rows;
-            int cols = Rows;
+            int cols = Columns;
 
             int maxLength = NumberMaxLength + 1;
             StringBuilder sb = new();
