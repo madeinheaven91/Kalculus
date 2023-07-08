@@ -5,7 +5,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Kalculus.LinearAlgebra.Matrices
+namespace Kalculus.LinearAlgebra
 {
     public partial class Matrix
     {
@@ -24,8 +24,7 @@ namespace Kalculus.LinearAlgebra.Matrices
             Columns = cols;
             Content = matrix;
             Length = rows * cols;
-            Determinant = Evaluate.Determinant(this);
-
+            if(rows == cols) Determinant = Evaluate.Determinant(this);
         }
 
         private int NumberMaxLength
@@ -119,15 +118,36 @@ namespace Kalculus.LinearAlgebra.Matrices
         {
             return Evaluate.Minor(this, a, b);
         }
-        public double this[int i, int j]
+
+        public Vector GetColumn(int column)
+        {
+            Vector vector = new(Rows);
+            for(int i = 0; i < Rows - 1; i++)
+            {
+                
+                vector[i] = Content[column, i];
+            }
+            return vector;
+        }
+        public Vector[] ToVectorArray()
+        {
+            Vector[] vectors = new Vector[Columns];
+            for(int i = 0; i < Columns; i++)
+            {
+                vectors[i] = this.GetColumn(i);
+            }
+
+            return vectors;
+        }
+        public double this[int column, int row]
         {
             get
             {
-                return Content[i, j];
+                return Content[column, row];
             }
             set
             {
-                Content[i, j] = value;
+                Content[row, column] = value;
             }
         }
 
@@ -137,7 +157,7 @@ namespace Kalculus.LinearAlgebra.Matrices
             int cols = Rows;
 
             int maxLength = NumberMaxLength + 1;
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
 
 
             for (int i = 0; i < rows; i++)

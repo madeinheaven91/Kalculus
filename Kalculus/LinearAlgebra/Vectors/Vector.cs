@@ -7,29 +7,30 @@ using System.Runtime.Intrinsics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Kalculus.LinearAlgebra;
 
 /* TODO:
-    методы с 2 векторами:
-        векторное произведение векторов
-        узнать являются ли векторы линейно зависимыми ( можно обобщить для n векторов)
-
-    сокращения:
-        добавить сокращения для нулевого вектора, для орт и прочего
+ *  GetHashCode();
+ *  CrossProduct(Vector rhs, Vector lhs);
+ *  TripleProduct(Vector first, Vector second, Vector third);
+ *  Spacial Operations:
+ *      Scale to space:
+ *          берет базисные векторы пространства и подгоняет координаты вектора под эти базисы.
+ *          сделать это можно по типу умножения матрицы на вектор Av = w, где A - матрица, состоящая из базисных векторов пространства, v - исходный вектор, w - результат
 */
 
-namespace Kalculus.LinearAlgebra.Vectors
+namespace Kalculus.LinearAlgebra
 {
-    public class Vector
+    public partial class Vector
     {
         public Vector(double[] elements)
         {
-            VectorOperations.DimensionException(elements.Length);
+            Helper.DimensionException(elements.Length);
             Content = elements;
         }
-
         public Vector(int elementCount, params double[] elements)
         {
-            VectorOperations.DimensionException(elementCount);
+            Helper.DimensionException(elementCount);
             Content = new double[elementCount];
             for (int i = 0; i < elementCount; i++)
             {
@@ -119,7 +120,21 @@ namespace Kalculus.LinearAlgebra.Vectors
                 return Normalize(this);
             }
         }
-
+        private Space? space;
+        public Space? Space {
+            get
+            {
+                if (space is null) return null;
+                return space;
+            }
+            set
+            {
+                space?.Vectors.Remove(this);
+                if (Dimensions != value.Dimensions) this.EquateDimensions(value.Dimensions);
+                space = value;
+                space.Vectors.Add(this);
+            }
+        }
         /// <summary>
         /// Makes this vector have a magnitude of 1.
         /// </summary>
@@ -141,10 +156,9 @@ namespace Kalculus.LinearAlgebra.Vectors
         /// <summary>
         /// Trims all zeros from the end until it reaches a non-zero vector component.
         /// </summary>
-        
         public Vector Trim(int min = 2)
         {
-            VectorOperations.DimensionException(min);
+            Helper.DimensionException(min);
             Vector result = this;
             for (int i = result.Dimensions - 1; i > 0; i--)
             {
@@ -189,6 +203,18 @@ namespace Kalculus.LinearAlgebra.Vectors
         }
 
         /// <summary>
+        /// Sets the amount of vector's dimensions to an arbitrary number equal or greater than 2.
+        /// </summary>
+        public Vector EquateDimensions(int dimensions)
+        {
+            Vector vector = new(dimensions);
+            this.Dimensions = vector.Dimensions;
+            return this;
+        }
+
+
+
+        /// <summary>
         /// Calculates the dot product of 2 vectors.
         /// </summary>
         /// <param name="First vector"></param>
@@ -208,6 +234,60 @@ namespace Kalculus.LinearAlgebra.Vectors
         }
 
         /// <summary>
+        /// Calculates the cross product of 2 3-dimensional vectors.
+        /// </summary>
+        /// <param name="First vector"></param>
+        /// <param name="Second vector"></param>
+        /// <returns></returns>
+        /*public static Vector CrossProduct(Vector rhs, Vector lhs)
+        {
+            Vector rhsMod, lhsMod;
+            if (rhs.Dimensions > 3)
+            {
+                rhsMod = rhs.Trim(3);
+            }
+            else
+            {
+                rhsMod = rhs.EquateDimensions(3);
+            }
+            if (lhs.Dimensions > 3)
+            {
+                lhsMod = lhs.Trim(3);
+            }
+            else
+            {
+                lhsMod = lhs.EquateDimensions(3);
+            }
+
+            Vector product = new(3);
+
+            
+
+            
+
+
+
+
+
+            return product;
+        }*/
+
+        /// <summary>
+        /// Calculates the triple product of 2 vectors.
+        /// </summary>
+        /// <param name="First vector"></param>
+        /// <param name="Second vector"></param>
+        /// <returns></returns>
+        /*public static double TripleProduct(Vector first, Vector second, Vector third)
+        {
+            EquateDimensions(first, second);
+            EquateDimensions(first, third);
+
+            double product = 0;
+            return product;
+        }*/
+
+        /// <summary>
         /// Calculates the angle between 2 vectors.
         /// </summary>
         /// <param name="First vector"></param>
@@ -223,21 +303,38 @@ namespace Kalculus.LinearAlgebra.Vectors
 
         }
 
-        // TODO
+        
+
         /// <summary>
-        /// Returns whether two vectors are linearly dependent.
+        /// Returns whether two vectors are collinear.
         /// </summary>
         /// <param name="first"></param>
         /// <param name="second"></param>
         /// <returns></returns>
-        public static bool AreLinearlyDependent(Vector first, Vector second)
+        public static bool AreCollinear(Vector first, Vector second)
         {
+            EquateDimensions (first, second);
+            for(int i = 0; i < first.Dimensions; i++)
+            {
+                if (first[i] != 0 && second[i] != 0)
+                {
+                    double n = first[i] / second[i];
+                    if (n * second == first) return true;
+                }
+            }
+            
+
             return false;
         }
 
         /// <summary>
-        /// Prints the content of a vector.
+        /// Returns whether two vectors are orthogonal.
         /// </summary>
+        /// <param name="first"></param>
+        /// <param name="second"></param>
+        /// <returns></returns>
+        public static bool AreOrthogonal(Vector first, Vector second) => DotProduct(first, second) == 0;
+
         public override string ToString()
         {
             string result = "(";
@@ -247,121 +344,25 @@ namespace Kalculus.LinearAlgebra.Vectors
             }
             return result.Remove(result.Length - 2, 2) + ")";
         }
-
-        /// <summary>
-        /// Returns the zero vector of a given dimension.
-        /// </summary>
-        public static Vector Zero(int dimensions = 2){
-            return new Vector(dimensions);
-        }
-        /// <summary>
-        /// Returns the i unit vector of a given dimension.
-        /// </summary>
-        public static Vector UnitX(int dimensions = 2)
+        public override bool Equals(object? obj)
         {
-            return new Vector(dimensions, 1);
-        }
-        /// <summary>
-        /// Returns the j unit vector of a given dimension.
-        /// </summary>
-        public static Vector UnitY(int dimensions = 2)
-        {
-            return new Vector(dimensions, 0, 1);
-        }
-        /// <summary>
-        /// Returns the k unit vector of a given dimension (minimum 3).
-        /// </summary>
-        public static Vector UnitZ(int dimensions = 3)
-        {
-            VectorOperations.DimensionException(dimensions, 3);
-            return new Vector(dimensions, 0, 0, 1);
-        }
+            if (obj == null || GetType() != obj.GetType() || obj is not Vector) return false;
 
-
-        public static Vector operator +(Vector firstVector, Vector secondVector)
-        {
-
-            Vector min;
-            Vector max;
-            if (firstVector.Dimensions > secondVector.Dimensions)
+            Vector? vector = obj as Vector;
+            if (Dimensions != vector.Dimensions)
             {
-                min = secondVector;
-                max = firstVector;
-            }
-            else
-            {
-                min = firstVector;
-                max = secondVector;
+                return false;
             }
 
-            min = new(max.Dimensions, min.Content);
-
-            Vector result = new(max.Dimensions);
-            for (int i = 0; i < max.Dimensions; i++)
+            for (int i = 0; i < Dimensions; i++)
             {
-                result.Content[i] = max.Content[i] + min.Content[i];
-                Console.WriteLine(max.Content[i] + " " + min.Content[i]);
-            }
-            return result;
-        }
-
-        public static Vector operator -(Vector firstVector, Vector secondVector)
-        {
-
-            Vector min;
-            Vector max;
-            if (firstVector.Dimensions > secondVector.Dimensions)
-            {
-                min = secondVector;
-                max = firstVector;
-            }
-            else
-            {
-                min = firstVector;
-                max = secondVector;
+                if (Content[i] != vector[i])
+                {
+                    return false;
+                }
             }
 
-            min = new(max.Dimensions, min.Content);
-
-            Vector result = new(max.Dimensions);
-            for (int i = 0; i < max.Dimensions; i++)
-            {
-                result.Content[i] = max.Content[i] - min.Content[i];
-            }
-            return result;
-        }
-
-        public static Vector operator -(Vector vector)
-        {
-            for (int i = 0; i < vector.Dimensions; i++)
-            {
-                vector.Content[i] *= -1;
-            }
-            return vector;
-        }
-        public static Vector operator *(double scalar, Vector vector)
-        {
-            for (int i = 0; i < vector.Dimensions; i++)
-            {
-                vector.Content[i] *= scalar;
-            }
-            return vector;
-        }
-        public static Vector operator *(Vector vector, double scalar)
-        {
-            for (int i = 0; i < vector.Dimensions; i++)
-            {
-                vector.Content[i] *= scalar;
-            }
-            return vector;
-        }
-        public static Vector operator /(Vector vector, double scalar)
-        {
-            for (int i = 0; i < vector.Dimensions; i++)
-            {
-                vector.Content[i] /= scalar;
-            }
-            return vector;
-        }
+            return true;
+        }        
     }
 }
