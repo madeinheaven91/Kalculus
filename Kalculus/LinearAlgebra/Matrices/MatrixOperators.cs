@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Kalculus.LinearAlgebra.Matrices;
 
-namespace Kalculus.LinearAlgebra
+namespace Kalculus.LinearAlgebra.Matrices
 {
     public partial class Matrix
     {

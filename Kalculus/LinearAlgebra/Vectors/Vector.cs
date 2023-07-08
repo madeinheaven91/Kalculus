@@ -19,7 +19,7 @@ using Kalculus.LinearAlgebra.Vectors;
  *          сделать это можно по типу умножения матрицы на вектор Av = w, где A - матрица, состоящая из базисных векторов пространства, v - исходный вектор, w - результат
 */
 
-namespace Kalculus.LinearAlgebra
+namespace Kalculus.LinearAlgebra.Vectors
 {
     public partial class Vector
     {

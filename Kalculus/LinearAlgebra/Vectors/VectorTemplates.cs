@@ -13,7 +13,7 @@ using Kalculus.LinearAlgebra.Vectors;
     GetHashCode();
 */
 
-namespace Kalculus.LinearAlgebra
+namespace Kalculus.LinearAlgebra.Vectors
 {
     public partial class Vector
     {
