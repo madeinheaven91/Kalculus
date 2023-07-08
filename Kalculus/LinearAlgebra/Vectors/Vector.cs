@@ -337,7 +337,7 @@ namespace Kalculus.LinearAlgebra
 
         public override string ToString()
         {
-            string result = "(";
+            string result = "column(";
             foreach (var value in Content)
             {
                 result += $"{value}, ";
