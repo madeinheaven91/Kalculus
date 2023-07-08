@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Kalculus
+namespace Kalculus.Functions
 {
-    public static partial class IntegerExtension
+    public static class Functions
     {
         public static int Factorial(this int value)
         {
@@ -19,9 +19,5 @@ namespace Kalculus
 
             return result;
         }
-    }
-    public static class Functions
-    {
-        
     }
 }
