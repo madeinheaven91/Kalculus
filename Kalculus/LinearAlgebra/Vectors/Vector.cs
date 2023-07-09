@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Kalculus.LinearAlgebra.Vectors;
+using Kalculus.LinearAlgebra.Matrices;
 
 /* TODO:
  *  GetHashCode();
@@ -210,6 +211,54 @@ namespace Kalculus.LinearAlgebra.Vectors
             Vector vector = new(dimensions);
             this.Dimensions = vector.Dimensions;
             return this;
+        }
+
+        /// <summary>
+        /// Sets all vector's dimensions in the array equal.
+        /// </summary>
+        /// <param name="vectors"></param>
+        public static void NormalizeDimensions(Vector[] vectors)
+        {
+            Vector max = new(2);
+            for (int i = 0; i < vectors.Length; i++)
+            {
+                if (vectors[i].Dimensions > max.Dimensions) max = vectors[i];
+            }
+            for (int i = 0; i < vectors.Length; i++)
+            {
+                vectors[i].EquateDimensions(max);
+            }
+        }
+
+        /// <summary>
+        /// Converts vector array to 2d double array.
+        /// </summary>
+        /// <param name="vectors"></param>
+        /// <returns></returns>
+        public static double[,] ToArray(Vector[] vectors)
+        {
+            Vector.NormalizeDimensions(vectors);
+            double[,] content = new double[vectors[0].Dimensions, vectors.Length];
+            for(int i = 0; i < vectors.Length; i++)
+            {
+                for(int j = 0; j < vectors[0].Dimensions; j++)
+                {
+                    content[j, i] = vectors[i][j];
+                }
+            }
+            return content;
+        }
+
+        /// <summary>
+        /// Returns matrix which content is a given vector array.
+        /// </summary>
+        /// <param name="vectors"></param>
+        /// <returns></returns>
+        public static Matrix ToMatrix(Vector[] vectors)
+        {
+            Vector.NormalizeDimensions(vectors);
+            Matrix matrix = new(vectors.ToArray());
+            return matrix;
         }
 
 

@@ -13,11 +13,11 @@ namespace Kalculus.LinearAlgebra.Matrices
             if (matrix.Rows != matrix.Columns)
                 throw new ArgumentException("The matrix must be square");
 
-            if (matrix.Length == 0)
+            if (matrix.Size == 0)
                 return 0;
-            if (matrix.Length == 1)
+            if (matrix.Size == 1)
                 return matrix[0, 0];
-            if (matrix.Length == 4)
+            if (matrix.Size == 4)
                 return matrix[0, 0] * matrix[1, 1] - matrix[0, 1] * matrix[1, 0];
 
 

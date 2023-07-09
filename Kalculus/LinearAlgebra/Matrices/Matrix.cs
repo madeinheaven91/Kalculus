@@ -9,6 +9,12 @@ using Kalculus.LinearAlgebra.Vectors;
 
 namespace Kalculus.LinearAlgebra.Matrices
 {
+    /*
+     * TODO:
+     *  Delete all zero rows and columns;
+     *  Get row echelon form (ступенчатый вид матрицы);
+     *  юзая это починить Rank (щас он неправильно работает с точки зрения математики)
+     */
     public partial class Matrix
     {
 
@@ -25,8 +31,20 @@ namespace Kalculus.LinearAlgebra.Matrices
             Rows = rows;
             Columns = cols;
             Content = matrix;
-            Length = rows * cols;
+            Size = rows * cols;
             if (rows == cols) Determinant = Evaluate.Determinant(this);
+        }
+
+        public Matrix(Vector[] vectors)
+        {
+            Vector.NormalizeDimensions(vectors);
+            double[,] content = Vector.ToArray(vectors);
+
+            Rows = content.GetLength(0);
+            Columns = content.GetLength(1);
+            Size = Rows * Columns;
+            Content = content;
+            if(this.IsSquare) Determinant = Evaluate.Determinant(this);
         }
 
         private int NumberMaxLength
@@ -53,10 +71,10 @@ namespace Kalculus.LinearAlgebra.Matrices
 
         public int Rows { get; }
         public int Columns { get; }
-        public int Length { get; }
+        public int Size { get; }
         public double? Determinant { get; }
         public double[,] Content { get; set; }
-        public int Order
+        public int Rank
         {
             get
             {
@@ -130,6 +148,11 @@ namespace Kalculus.LinearAlgebra.Matrices
             return Evaluate.Minor(this, a, b);
         }
 
+        /// <summary>
+        /// Returns a column of a matrix.
+        /// </summary>
+        /// <param name="column"></param>
+        /// <returns></returns>
         public Vector GetColumn(int column)
         {
             Vector vector = new(Rows);
@@ -140,6 +163,11 @@ namespace Kalculus.LinearAlgebra.Matrices
             }
             return vector;
         }
+
+        /// <summary>
+        /// Converts a matrix to vector array.
+        /// </summary>
+        /// <returns></returns>
         public Vector[] ToVectorArray()
         {
             Vector[] vectors = new Vector[Columns];
@@ -150,6 +178,7 @@ namespace Kalculus.LinearAlgebra.Matrices
 
             return vectors;
         }
+
         public double this[int column, int row]
         {
             get
@@ -194,7 +223,6 @@ namespace Kalculus.LinearAlgebra.Matrices
 
             return sb.ToString();
         }
-
         public override bool Equals(object? obj)
         {
             if (obj == null || GetType() != obj.GetType() || obj is not Matrix)
@@ -213,7 +241,6 @@ namespace Kalculus.LinearAlgebra.Matrices
             }
             return true;
         }
-
         public override int GetHashCode()
         {
             return HashCode.Combine(Rows, Columns);

@@ -25,6 +25,7 @@ namespace Kalculus.LinearAlgebra
         }
         public Space(Matrix matrix)
         {
+            Helper.MatrixSquareException(matrix);
             Basis = matrix.ToVectorArray();
             Vectors = new List<Vector>();
         }
